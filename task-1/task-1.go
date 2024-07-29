@@ -4,6 +4,53 @@ import (
 	"fmt"
 )
 
+type Student struct {
+	name      string
+	numcourse int
+	courses   map[string]float32
+	average   float32
+	grade     string
+}
+
+func main() {
+
+	var student Student
+
+	fmt.Print("Write your name: ")
+	fmt.Scan(&student.name)
+	fmt.Print("Please write the number of subjects you will take: ")
+	fmt.Scan(&student.numcourse)
+	fmt.Println()
+
+	for k := 1; k <= student.numcourse; k++ {
+		var course string
+		var mark float32
+		fmt.Println("Start by adding the course #", k, ":")
+		fmt.Print("\t-----> Subject Name: ")
+		fmt.Scan(&course)
+		fmt.Print("\t-----> Mark: ")
+		fmt.Scan(&mark)
+		fmt.Println()
+		student.courses[course] = mark
+	}
+
+	student.average = avgCalculator(student.courses)
+	student.grade = markGrade(student.average)
+
+	fmt.Printf("Name: %s", student.name)
+	fmt.Println("Course Results:")
+	fmt.Println("-----------------------------------")
+	fmt.Println("    Course\tMark\tGrade")
+	for course, mark := range student.courses {
+		fmt.Printf("     %s\t%.1f\t%s\n", course, mark, markGrade(mark))
+	}
+
+	fmt.Println("-----------------------------------")
+	fmt.Printf("\tAverage Mark: %.2f\n", student.average)
+	fmt.Printf("\tAverage Grade: %s\n", student.grade)
+	fmt.Println()
+}
+
 func markGrade(mark float32) string {
 	var grade string
 
@@ -42,38 +89,4 @@ func avgCalculator(cr map[string]float32) float32 {
 	avg := float32(sumo) / float32(len(cr))
 
 	return avg
-}
-
-func main() {
-	var numo int
-	fmt.Print("Please write the number of subjects you will take: ")
-	fmt.Scan(&numo)
-	fmt.Println()
-
-	courseReport := make(map[string]float32)
-	for k := 1; k <= numo; k++ {
-		var course string
-		var mark float32
-		fmt.Println("Start by adding the course #", k, ":")
-		fmt.Print("\t-----> Subject Name: ")
-		fmt.Scan(&course)
-		fmt.Print("\t-----> Mark: ")
-		fmt.Scan(&mark)
-		fmt.Println()
-		courseReport[course] = mark
-	}
-
-	avg_mark := avgCalculator(courseReport)
-
-	fmt.Println("Course Results:")
-	fmt.Println("-----------------------------------")
-	fmt.Println("    Course\tMark\tGrade")
-	for course, mark := range courseReport {
-		fmt.Printf("     %s\t%.1f\t%s\n", course, mark, markGrade(mark))
-	}
-
-	fmt.Println("-----------------------------------")
-	fmt.Printf("\tAverage Mark: %.2f\n", avg_mark)
-	fmt.Printf("\tAverage Grade: %s\n", markGrade(avg_mark))
-	fmt.Println()
 }

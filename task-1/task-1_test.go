@@ -10,7 +10,7 @@ type TestFreq struct {
 	expected_grade string
 }
 
-func TestWordFrequency(t *testing.T) {
+func TestGrade(t *testing.T) {
 	tests := []TestFreq{
 		{
 			input: map[string]float32{
