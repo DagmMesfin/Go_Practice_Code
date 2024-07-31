@@ -6,13 +6,18 @@ import (
 	"unicode"
 )
 
+func main() {
+	fmt.Println(wordCount("Hello there Hello there, how are you, and you"))
+	fmt.Println(palindromeChecker("akabak"))
+}
+
 func wordCount(sent string) map[string]int {
 	sent = strings.ToLower(sent)
 
 	var clean strings.Builder
 
 	for _, ch := range sent {
-		if unicode.IsLetter(ch) || unicode.IsSpace(ch) {
+		if unicode.IsLetter(ch) || unicode.IsSpace(ch) || unicode.IsDigit(ch) {
 			clean.WriteRune(ch)
 		}
 	}
@@ -36,9 +41,4 @@ func palindromeChecker(word string) bool {
 		}
 	}
 	return true
-}
-
-func main() {
-	fmt.Println(wordCount("Hello there Hello there, how are you, and you"))
-	fmt.Println(palindromeChecker("akabak"))
 }

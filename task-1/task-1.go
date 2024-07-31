@@ -14,7 +14,9 @@ type Student struct {
 
 func main() {
 
-	var student Student
+	var student Student = Student{
+		courses: make(map[string]float32),
+	}
 
 	fmt.Print("Write your name: ")
 	fmt.Scan(&student.name)
@@ -25,11 +27,19 @@ func main() {
 	for k := 1; k <= student.numcourse; k++ {
 		var course string
 		var mark float32
+	start:
 		fmt.Println("Start by adding the course #", k, ":")
 		fmt.Print("\t-----> Subject Name: ")
 		fmt.Scan(&course)
 		fmt.Print("\t-----> Mark: ")
 		fmt.Scan(&mark)
+
+		if !inRange(mark) {
+			fmt.Println("Write a valid mark input (1-100)")
+			fmt.Println()
+			goto start
+		}
+
 		fmt.Println()
 		student.courses[course] = mark
 	}
@@ -89,4 +99,8 @@ func avgCalculator(cr map[string]float32) float32 {
 	avg := float32(sumo) / float32(len(cr))
 
 	return avg
+}
+
+func inRange(mark float32) bool {
+	return 0 <= mark && mark <= 100
 }
